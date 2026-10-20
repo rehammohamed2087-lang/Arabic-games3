@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مغامرة مسعودة السلحفاة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--ink:#2b2350;--card:#fffdf6;--p:#7c4dff;--g:#2ecc71;--r:#ff5d73;--y:#ffc93c;--b:#36b6ff;--o:#ff9f43}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:'Cairo',Tahoma,Arial,sans-serif;color:var(--ink);min-height:100vh;
+background:linear-gradient(180deg,#b9ecff 0%,#e9fbd5 60%,#fff3b8 100%);background-attachment:fixed;overflow-x:hidden}
+#app{max-width:560px;margin:0 auto;padding:14px}
+.bar{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.pill{background:#fff;border-radius:99px;padding:4px 14px;font-weight:800;box-shadow:0 3px 0 #0001;white-space:nowrap}
+.prog{flex:1;height:16px;background:#fff;border-radius:99px;overflow:hidden;box-shadow:inset 0 2px 4px #0002}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--o),var(--y),var(--g));border-radius:99px;transition:width .5s}
+.world{display:inline-block;background:var(--p);color:#fff;border-radius:14px;padding:4px 14px;font-weight:800;margin-bottom:8px}
+.card{background:var(--card);border-radius:26px;padding:18px;box-shadow:0 8px 0 #0002;border:4px solid #fff}
+.mascot{font-size:64px;text-align:center;line-height:1;animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(4deg)}}
+h1{text-align:center;margin:6px 0;font-size:30px;color:var(--p)}
+.q{font-size:22px;font-weight:800;line-height:1.7;margin:10px 0 14px}
+.hint{font-size:15px;color:#6b6490;font-weight:600}
+.opts{display:grid;gap:10px}
+button{font:inherit;font-weight:800;font-size:21px;border:0;border-radius:20px;padding:13px 16px;color:#fff;cursor:pointer;box-shadow:0 6px 0 #0003;transition:transform .1s}
+button:active{transform:translateY(4px);box-shadow:0 2px 0 #0003}
+.o0{background:var(--b)}.o1{background:var(--o)}.o2{background:var(--p)}.o3{background:#ff6fb5}
+.ok{background:var(--g)!important;animation:pop .5s}.no{background:var(--r)!important;animation:shake .4s;opacity:.55}
+@keyframes pop{50%{transform:scale(1.08)}}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.msg{min-height:34px;text-align:center;font-weight:800;font-size:20px;margin:10px 0 2px}
+.next{background:var(--g);width:100%;margin-top:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:56px;padding:8px;border-radius:18px}
+.ans{background:#eef6ff;border:3px dashed var(--b);margin-bottom:12px}
+.chips button{font-size:20px;padding:8px 16px}
+input[type=text]{width:100%;font:inherit;font-size:22px;text-align:center;padding:12px;border-radius:16px;border:3px solid var(--b);margin:10px 0;color:var(--ink);background:#fff}
+.two{display:flex;gap:10px}.two button{flex:1;opacity:.6}.two button.sel{opacity:1;outline:4px solid var(--y)}
+.cert{background:#fffbea;border:10px double #e0a800;border-radius:18px;padding:18px 12px;text-align:center;box-shadow:0 8px 0 #0002;position:relative}
+.cert h2{margin:4px 0;color:#c0392b;font-size:30px}
+.cert .nm{font-size:34px;font-weight:800;color:var(--p);border-bottom:3px dotted var(--o);display:inline-block;padding:0 18px;margin:6px 0}
+.medal{font-size:84px;line-height:1;animation:bob 2s infinite}
+.sc{font-size:28px;font-weight:800;color:var(--g)}
+.stars{font-size:34px;letter-spacing:4px}
+.rows{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
+.rows span{background:#fff;border-radius:12px;padding:3px 10px;font-weight:700;font-size:15px;box-shadow:0 2px 0 #0002}
+.sign{display:flex;justify-content:space-around;margin-top:10px;font-weight:700;font-size:15px}
+.fall{position:fixed;top:-40px;font-size:28px;pointer-events:none;z-index:9;animation:fall 2.4s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+.rd{font-size:27px;line-height:2.5;text-align:right;font-weight:600}.w{display:inline-block;padding:0 5px;margin:0 1px;border-radius:12px;cursor:pointer;transition:all .2s}.w.on{background:#c8f7d4}.w.hl{background:var(--y);transform:scale(1.12)}.two.ctl button{opacity:1;font-size:18px;padding:10px 8px}.tabs{display:flex;gap:8px;margin-bottom:10px}.tabs button{flex:1;font-size:17px;opacity:.6}.tabs button.sel{opacity:1;outline:4px solid var(--y)}
+@media print{body{background:#fff}.noprint{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const Q=[
+{w:'🛒 مغامرة البقالة',q:'ما مرادف «دون فائدة» في القصة؟',o:['دون جدوى','دون تعب','دون صديق'],a:0,p:1},
+{w:'🛒 مغامرة البقالة',q:'ما ضد كلمة «القديم»؟',o:['الجديد','الكبير','الحزين'],a:0,p:1},
+{w:'🛒 مغامرة البقالة',q:'ما جمع كلمة «إصبع»؟',o:['أصابع','أصابيع','صبعان'],a:0,p:1},
+{w:'🛒 مغامرة البقالة',q:'ما مفرد كلمة «أكياس»؟',o:['كيس','كيسان','كوس'],a:0,p:1},
+{w:'📖 أسرار القصة',q:'أين جرت أحداث القصة؟ 🏪',o:['في البقالة','في المدرسة','في الحديقة'],a:0,p:1},
+{w:'📖 أسرار القصة',q:'عمّ بحثت مسعودة؟ 🔎',o:['رقائق ملونة','ألوان','صديقتها'],a:0,p:1},
+{w:'📖 أسرار القصة',q:'كيف ذهبت مسعودة إلى البقالة؟ 🐢',o:['متحمسة','خائفة','غاضبة'],a:0,p:1},
+{w:'💡 كنز العبرة',q:'ما المغزى من قصة «مسعودة السلحفاة»؟',o:['نفكر ونسأل قبل أن نحكم','الأكل الصحي مفيد ولذيذ','ننام مبكرًا دائمًا'],a:[0,1],p:1.5},
+{w:'✏️ صانع الجمل',type:'ord',q:'رتّب الكلمات لتكوّن جملة مفيدة بكلمة «المقرمشة»',words:['أحب','رقائق','البطاطس','المقرمشة'],p:1.5},
+{w:'🔤 عالم القواعد',q:'أي الكلمات الآتية تدل على حرف؟',o:['إلى','مسعودة','ذهبت'],a:0,p:.5},
+{w:'🔤 عالم القواعد',q:'ما نوع كلمة «البطاطس»؟',o:['اسم','حرف','فعل'],a:0,p:.5},
+{w:'🔤 عالم القواعد',q:'حدّد الفعل: وجدت مسعودة رقائق البطاطس.',o:['وجدت','البطاطس','مسعودة'],a:0,p:.5},
+{w:'🧩 املأ الفراغ',q:'رفع ______ علم الإمارات. (اسم إنسان)',o:['أحمد','التفاح','الطاولة'],a:0,p:.5},
+{w:'🧩 املأ الفراغ',q:'أحب تناول ______. (اسم نبات)',o:['التفاح','سالم','الكرسي'],a:0,p:.5},
+{w:'🌞🌙 اللام الشمسية والقمرية',q:'كلمة تبدأ بلام قمرية:',o:['البيت','أم','الصباح'],a:0,p:.5},
+{w:'🌞🌙 اللام الشمسية والقمرية',q:'كلمة تبدأ بلام شمسية:',o:['الصباح','الماء','البيت'],a:0,p:.5},
+{w:'🧹 مريم المساعدة',q:'ما مفرد كلمة «أيام»؟',o:['يوم','أيم','يومان'],a:0,p:.5},
+{w:'🧹 مريم المساعدة',q:'ماذا فعلت مريم في الصباح؟',o:['أحضرت دلو الماء لتنظّف البيت','ذهبت إلى البقالة','سقت الحديقة'],a:0,p:1}
+];
+const TOTAL=Q.reduce((s,x)=>s+x.p,0),RP=2.5,K=20/(TOTAL+2*RP);
+let S,app=document.getElementById('app');
+const tot=()=>S.score+rp(),rp=()=>[0,1].reduce((s,p)=>s+RP*S.rs[p].size/WC[p],0);
+const fmt=n=>n.toLocaleString('ar-EG',{maximumFractionDigits:1});
+const shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const MSG_OK=['أحسنت! 🌟','رائع جدًا! 🎉','ممتاز! 👏','أنت نجم! ⭐','عمل مذهل! 🚀'];
+function snd(f,d){try{const c=snd.c||(snd.c=new (window.AudioContext||window.webkitAudioContext)());const o=c.createOscillator(),g=c.createGain();o.frequency.value=f;o.type='triangle';g.gain.value=.12;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+d)}catch(e){}}
+function rain(em){for(let i=0;i<18;i++){const s=document.createElement('span');s.className='fall';s.textContent=em[i%em.length];s.style.left=Math.random()*95+'vw';s.style.animationDelay=Math.random()*.6+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),3200)}}
+
+function start(){
+ S={i:0,score:0,g:'m',name:'',res:[],shown:-1,rs:[new Set(),new Set()]};
+ app.innerHTML=`<div class="card"><div class="mascot">🐢</div><h1>مغامرة مسعودة السلحفاة</h1>
+ <p style="text-align:center;font-weight:700;font-size:19px">ساعد مسعودة في رحلة اللغة العربية واجمع النجوم ⭐ لتنال شهادة التقدير 🏆</p>
+ <input id="nm" type="text" placeholder="اكتب اسمك هنا ✍️" maxlength="30">
+ <div class="two"><button id="gm" class="o0 sel" onclick="gen('m')">👦 طالب</button><button id="gf" class="o3" onclick="gen('f')">👧 طالبة</button></div>
+ <button class="next" style="margin-top:14px;font-size:24px" onclick="go()">هيا نبدأ! 🚀</button></div>`;
+}
+function gen(g){S.g=g;gm.classList.toggle('sel',g=='m');gf.classList.toggle('sel',g=='f')}
+function go(){S.name=nm.value.trim()||(S.g=='m'?'الطالب البطل':'الطالبة البطلة');S.i=0;S.score=0;S.res=[];snd(660,.15);ask()}
+
+function pb(){const p=S.i<=11?0:S.i>=14?1:-1;return p<0?'':`<button class="o1" style="font-size:15px;padding:6px 12px" onclick="rd(${p},'peek')">📖 القطعة</button>`}
+function head(){const x=Q[S.i];return `<div class="bar"><span class="pill">⭐ ${fmt(tot()*K)}</span><div class="prog"><i style="width:${S.i/Q.length*100}%"></i></div><span class="pill">${fmt(S.i+1)}/${fmt(Q.length)}</span>${pb()}</div><span class="world">${x.w}</span>`}
+function ask(){
+ if((S.i==0||S.i==14)&&S.shown!=S.i){S.shown=S.i;return rd(S.i==0?0:1,'intro')}
+ const x=Q[S.i];S.m=0;S.done=0;
+ if(x.type=='ord'){S.pool=shuf(x.words);S.built=[];return drawOrd()}
+ S.opts=shuf(x.o.map(t=>t));
+ app.innerHTML=`${head()}<div class="card"><div class="mascot" id="mc">🐢</div><div class="q">${x.q}</div><div class="opts">${S.opts.map((t,i)=>`<button class="o${i}" id="b${i}" onclick="pick(${i})">${t}</button>`).join('')}</div><div class="msg" id="msg"></div><div id="nx"></div></div>`;
+}
+function pick(i){
+ if(S.done)return;const x=Q[S.i],t=S.opts[i],ok=[].concat(x.a).some(k=>x.o[k]==t);
+ const b=document.getElementById('b'+i);
+ if(ok){b.classList.add('ok');win(x)}else{S.m++;b.classList.remove('no');void b.offsetWidth;b.classList.add('no');b.disabled=true;snd(200,.25);msg.textContent='حاول مرة أخرى، أنت تستطيع! 💪';mc.textContent='🤔'}
+}
+function win(x){
+ S.done=1;const got=S.m==0?x.p:0;S.score+=got;S.res.push(got);
+ snd(880,.12);setTimeout(()=>snd(1175,.2),130);rain(['⭐','🎉','✨']);
+ const m=document.getElementById('msg');m.textContent=got?MSG_OK[Math.floor(Math.random()*5)]+' +'+fmt(got*K):'جميل! تعلّمنا الإجابة الصحيحة 📚';
+ const mc2=document.getElementById('mc');if(mc2)mc2.textContent='🥳';
+ document.getElementById('nx').innerHTML=`<button class="next" onclick="nextQ()">${S.i==Q.length-1?'🏆 شهادتي':'التالي ⬅️'}</button>`;
+}
+function nextQ(){S.i++;S.i>=Q.length?cert():ask()}
+
+function drawOrd(){
+ const x=Q[S.i];
+ app.innerHTML=`${head()}<div class="card"><div class="mascot" id="mc">🐢</div><div class="q">${x.q}</div>
+ <div class="chips ans" id="ans">${S.built.map((w,i)=>`<button class="o${i%4}" onclick="rm(${i})">${w}</button>`).join('')||'<span class="hint">اضغط على الكلمات بالترتيب 👇</span>'}</div>
+ <div class="chips">${S.pool.map((w,i)=>`<button class="o${(i+2)%4}" onclick="add(${i})">${w}</button>`).join('')}</div>
+ <div class="msg" id="msg"></div><div id="nx">${S.done?'':`<button class="next" onclick="chk()">تحقق ✅</button>`}</div></div>`;
+}
+function add(i){if(S.done)return;S.built.push(S.pool.splice(i,1)[0]);drawOrd()}
+function rm(i){if(S.done)return;S.pool.push(S.built.splice(i,1)[0]);drawOrd()}
+function chk(){
+ const x=Q[S.i];
+ if(S.built.join(' ')==x.words.join(' ')){drawOrd.call();S.done=0;win(x);
+  document.getElementById('ans').innerHTML=S.built.map((w,i)=>`<button class="ok">${w}</button>`).join('')}
+ else{S.m++;snd(200,.25);const a=document.getElementById('ans');a.classList.add('no');setTimeout(()=>a.classList.remove('no'),400);msg.textContent='رتّبها مرة أخرى، المحاولة جميلة! 💪'}
+}
+
+function cert(){
+ const p=tot()/20,f=S.g=='f';
+ const lv=p>=.9?['🥇',f?'بطلة اللغة العربية الذهبية':'بطل اللغة العربية الذهبي','⭐⭐⭐⭐⭐']:p>=.7?['🥈',f?'نجمة اللغة العربية الفضية':'نجم اللغة العربية الفضي','⭐⭐⭐⭐']:p>=.5?['🥉',f?'مجتهدة مبدعة':'مجتهد مبدع','⭐⭐⭐']:['🌱',f?'مغامرة صغيرة واعدة':'مغامر صغير واعد','⭐⭐']; 
+ const d=new Date().toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'});
+ const g=(a,b)=>K*S.res.slice(a,b).reduce((s,v)=>s+v,0), mx=(a,b)=>K*Q.slice(a,b).reduce((s,v)=>s+v.p,0);
+ const secs=[['🛒 الكلمات',0,4],['📖 الفهم',4,7],['💡 العبرة',7,8],['✏️ الجملة',8,9],['🔤 القواعد',9,17],['🧹 النص',17,18]].map(s=>`<span>${s[0]}: ${fmt(g(s[1],s[2]))}/${fmt(mx(s[1],s[2]))}</span>`).join('')+`<span>📖 القراءة: ${fmt(rp())}/${fmt(2*RP)}</span>`;
+ app.innerHTML=`<div class="cert" id="ct"><div class="medal">${lv[0]}</div><h2>🏆 شهادة تقدير 🏆</h2>
+ <div style="font-weight:700;font-size:18px">تتشرف مسعودة السلحفاة بمنح ${f?'الطالبة':'الطالب'}</div>
+ <div class="nm">${S.name.replace(/</g,'&lt;')}</div>
+ <div style="font-weight:700;font-size:18px">لقب «${lv[1]}»</div>
+ <div class="stars">${lv[2]}</div>
+ <div class="sc">الدرجة: ${fmt(tot()*K)} من ${fmt(20)}</div>
+ <div class="rows">${secs}</div>
+ <div style="font-weight:700">${f?'تهانينا لكِ، واصلي التألق!':'تهانينا لك، واصل التألق!'} 🌈</div>
+ <div class="sign"><span>📅 ${d}</span><span>🐢 مسعودة</span></div></div>
+ <div class="two noprint" style="margin-top:14px"><button class="o1" style="opacity:1" onclick="try{window.print()}catch(e){}">🖨️ اطبع</button><button class="o2" style="opacity:1" onclick="start()">🔄 العب من جديد</button></div>`;
+ snd(523,.15);setTimeout(()=>snd(659,.15),160);setTimeout(()=>snd(784,.3),320);
+ rain(['🎉','🏆','⭐','🎈','🌟']);setTimeout(()=>rain(['🎊','✨','🥳']),1200);
+}
+const P=[{t:'📖 مسعودة السلحفاة',s:['ذَهَبَتْ مَسْعودَةُ إلى الْبِقالَةِ مُتَحَمِّسَةً، فَوَجَدَتْ رَقائِقَ الْبَطاطِسِ،','ثُمَّ ذَهَبَتْ لِلْبَحْثِ عَنْ رَقائِقَ مُلَوَّنَةٍ لِوالِدِها، بَحَثَتْ.. وَبَحَثَتْ دونَ جَدْوى.','لَكِنْ، مَهْلًا!! ما هَذا الْكيسُ الْمُلَوَّنُ الْجَديدُ؟','قالَ الْبائِعُ: إِنَّها رَقائِقُ الْخَسِّ الْمُقَرْمَشَةُ، وَأَصابِعُ الْجَزَرِ النّاعِمَةُ، وَحَلَقاتُ الْبَصَلِ الطّازَجَةُ.']},{t:'🧹 مريم والبيت',s:['في الصَّباحِ أَحْضَرَتْ مَرْيَمُ دَلْوَ الْماءِ وَقالَتْ:','“سَأُنَظِّفُ الْبَيْتَ لِتَجِدَهُ أُمّي نَظيفًا.”','قالَتْ أُمُّ مَرْيَمَ:','“شُكْرًا لَكِ يا مَرْيَمُ، سَتُساعِديَنني في تَنْظيفِ الْبَيْتِ كُلَّ يَوْمٍ.”']}];
+let R={p:0,got:new Set,tok:0},W=[];
+const WC=P.map(x=>x.s.join(' ').split(' ').length);
+function updR(){const c=document.getElementById('cnt');if(c)c.textContent='⭐ '+fmt(RP*S.rs[R.p].size/W.length)+' / '+fmt(RP)}
+function stopR(){R.tok++;try{speechSynthesis.cancel()}catch(e){}}
+function say(t,cb){let done=0;const f=()=>{if(!done){done=1;cb&&cb()}};try{const u=new SpeechSynthesisUtterance(t);u.lang='ar-SA';u.rate=.7;u.onend=f;u.onerror=f;speechSynthesis.speak(u);setTimeout(f,3000+t.length*150)}catch(e){setTimeout(f,900)}}
+function rd(p,mode){
+ stopR();R.p=p;R.got=new Set();W=[];
+ const intro=mode=='intro';
+ const body=P[p].s.map((t,si)=>t.split(' ').map(w=>{W.push({w,si});return `<span class="w${S.rs[p].has(W.length-1)?' on':''}" id="w${W.length-1}" onclick="tap(${W.length-1})">${w}</span>`}).join(' ')).join(' ');
+ const html=`<div class="bar"><span class="pill">${P[p].t}</span><span class="pill" id="cnt">⭐ ${fmt(RP*S.rs[p].size/W.length)} / ${fmt(RP)}</span></div>
+ <div class="card"><div class="mascot">🐢</div><p class="hint" style="text-align:center;margin:4px">${intro?'اقرأ القطعة جيدًا قبل الأسئلة، واضغط على كل كلمة لتسمعها وتجمع درجة القراءة ⭐ (٢٫٥ درجة)':'يمكنك قراءة القطعة مرة أخرى ثم العودة للسؤال 👆'}</p><div class="rd" id="txt">${body}</div><div class="msg" id="rmsg"></div>
+ <div class="two ctl"><button class="o0" onclick="auto('w')">🐢 كلمة كلمة</button><button class="o1" onclick="auto('s')">🎧 جملة جملة</button><button class="o3" onclick="stopR();clr()">⏹️ توقف</button></div>
+ <button class="next" onclick="${intro?'stopR();ask()':'closeR()'}">${intro?'✅ قرأتُ القطعة، هيا للأسئلة 🚀':'↩️ العودة إلى السؤال'}</button></div>`;
+ if(intro){app.innerHTML=html;window.scrollTo(0,0)}
+ else{const o=document.createElement('div');o.id='ov';o.style.cssText='position:fixed;inset:0;z-index:20;overflow:auto;padding:calc(14px + env(safe-area-inset-top,0px)) 14px 30px;background:linear-gradient(180deg,#b9ecff,#e9fbd5 60%,#fff3b8)';o.innerHTML='<div style="max-width:560px;margin:0 auto">'+html+'</div>';document.body.appendChild(o)}
+}
+function closeR(){stopR();const o=document.getElementById('ov');if(o)o.remove()}
+function clr(){document.querySelectorAll('.hl').forEach(e=>e.classList.remove('hl'))}
+function tap(i){stopR();clr();const e=document.getElementById('w'+i);e.classList.add('hl','on');say(W[i].w,()=>e.classList.remove('hl'));snd(700,.08);S.rs[R.p].add(i);R.got.add(i);updR();
+ if(S.rs[R.p].size==W.length){document.getElementById('rmsg').textContent='قرأتَ القطعة كلها! أنت قارئ ماهر 🏆';rain(['⭐','🎉','📚']);snd(1000,.3)}}
+function auto(m){stopR();clr();const t=R.tok;
+ if(m=='w'){let i=0;const nx=()=>{if(t!=R.tok)return;clr();if(i>=W.length)return;const e=document.getElementById('w'+i);e.classList.add('hl','on');S.rs[R.p].add(i);updR();const w=W[i].w;i++;say(w,()=>setTimeout(nx,250))};nx()}
+ else{let s=0;const n=P[R.p].s.length;const nx=()=>{if(t!=R.tok)return;clr();if(s>=n)return;W.forEach((x,k)=>{if(x.si==s){document.getElementById('w'+k).classList.add('hl','on');S.rs[R.p].add(k)}});updR();const tx=P[R.p].s[s];s++;say(tx,()=>setTimeout(nx,500))};nx()}}
+start();
+</script>
+</body>
+</html>
